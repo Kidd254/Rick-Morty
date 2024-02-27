@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getLocation } from '../redux/list/listSlice';
 import { fetchResidents } from '../redux/location/residentsSlice';
 import { useNavigate } from 'react-router-dom';
-import ResidentDetails from './ResidentDetails';
 
 const List = () => {
   const dispatch = useDispatch();
@@ -16,11 +15,33 @@ const List = () => {
 
   const [filter, setFilter] = useState('');
 
-  const filteredLocations = list.filter(
-    (location) =>
-      location.list_name.toLowerCase().includes(filter.toLowerCase()) ||
-      location.list_type.toLowerCase().includes(filter.toLowerCase())
-  );
+  const residentMap = residents.reduce((map, resident) => {
+    map[resident.id] = resident;
+    return map;
+  }, {});
+
+  const filteredLocations = list.filter((location) => {
+    const locationNameMatch = location.list_name
+      .toLowerCase()
+      .includes(filter.toLowerCase());
+
+    const residentsMatch = location.residentURLs.some((residentURL) => {
+      const residentId = residentURL.split('/').pop();
+      const residentDetails = residentMap[residentId];
+
+      return (
+        residentDetails &&
+        (residentDetails.resident_name
+          .toLowerCase()
+          .includes(filter.toLowerCase()) ||
+          filter
+            .toLowerCase()
+            .includes(residentDetails.resident_name.toLowerCase()))
+      );
+    });
+
+    return locationNameMatch || residentsMatch;
+  });
 
   useEffect(() => {
     // Fetch locations when the component mounts
@@ -51,11 +72,6 @@ const List = () => {
     // You can perform additional actions that depend on residents here
   }, [residents]);
 
-  const residentMap = residents.reduce((map, resident) => {
-    map[resident.id] = resident;
-    return map;
-  }, {});
-
   const handleResidentClick = (residentId) => {
     navigate(`/resident-details/${residentId}`);
   };
@@ -72,10 +88,6 @@ const List = () => {
       {status === 'failed' && <p>Error loading data</p>}
       {filteredLocations.map((location) => (
         <div key={location.id}>
-          <h2>{location.list_name}</h2>
-          <p>Type: {location.list_type}</p>
-
-          {/* Display residents for the current location */}
           {location.residentURLs.map((residentURL) => {
             // Extract ID from the resident URL
             const residentId = residentURL.split('/').pop();
@@ -96,6 +108,9 @@ const List = () => {
                     src={resident.resident_image}
                     alt={resident.resident_name}
                   />
+                  {/* Display location details */}
+                  <h4>Location: {location.list_name}</h4>
+                  <p>Type: {location.list_type}</p>
                 </div>
               );
             }
