@@ -43,7 +43,7 @@ const residentsSlice = createSlice({
             resident_status: resident.status,
             resident_image: resident.image
           }));
-          console.log('Listed from Reduxeee:', state.residents); // Corrected to state.residents
+          
         }
       })
       .addCase(fetchResidents.rejected, (state, action) => {
