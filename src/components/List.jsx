@@ -45,8 +45,6 @@ const List = () => {
 
   useEffect(() => {
     // This effect will run whenever residents are updated
-    console.log('Residents after fetching:', residents);
-    // You can perform additional actions that depend on residents here
   }, [residents]);
 
   const handleResidentClick = (residentId) => {
@@ -130,7 +128,7 @@ const List = () => {
                     return (
                       <div
                         key={resident.id}
-                        className="card-details border p-3"
+                        className="card-details border p-3 mb-2"
                         onClick={() => handleResidentClick(resident.id)}
                       >
                         <h3 className="card-title">{resident.resident_name}</h3>
