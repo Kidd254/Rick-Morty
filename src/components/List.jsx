@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const List = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [residentMap, setResidentMap] = useState({});
   const { list, residents, status } = useSelector((state) => ({
     list: state.list.list,
     residents: state.residents.residents,
@@ -14,11 +15,6 @@ const List = () => {
   }));
 
   const [filter, setFilter] = useState('');
-
-  const residentMap = residents.reduce((map, resident) => {
-    map[resident.id] = resident;
-    return map;
-  }, {});
 
   useEffect(() => {
     // Fetch locations when the component mounts
@@ -44,7 +40,13 @@ const List = () => {
   }, [dispatch, list]);
 
   useEffect(() => {
-    // This effect will run whenever residents are updated
+    // Update residentMap whenever residents are updated
+    setResidentMap(
+      residents.reduce((map, resident) => {
+        map[resident.id] = resident;
+        return map;
+      }, {})
+    );
   }, [residents]);
 
   const handleResidentClick = (residentId) => {
@@ -71,21 +73,17 @@ const List = () => {
 
       return (
         residentDetails &&
-        (residentDetails.resident_name
+        residentDetails.resident_name
           .toLowerCase()
-          .includes(filter.toLowerCase()) ||
-          filter
-            .toLowerCase()
-            .includes(residentDetails.resident_name.toLowerCase()))
+          .includes(filter.toLowerCase())
       );
     });
 
+    console.log('Location Name Match:', locationNameMatch);
+    console.log('Residents Match:', residentsMatch);
+
     return locationNameMatch || residentsMatch;
   });
-
-
- 
-
   // Shuffle the filteredLocations array randomly
   const shuffledLocations = shuffleArray([...filteredLocations]);
 
