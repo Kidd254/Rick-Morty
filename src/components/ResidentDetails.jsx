@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { fetchDetails } from '../redux/Details/detailsSlice';
 
 const ResidentDetails = () => {
@@ -34,17 +34,56 @@ const ResidentDetails = () => {
   const resident = details[0]; // Assuming you are fetching a single resident
 
   return (
-    <div>
-      <img src={resident.details_image} alt={resident.details_name} />
-      <h3>{resident.details_name}</h3>
-      <p>Status: {resident.details_status}</p>
-      <p>Gender: {resident.details_gender}</p>
-      <p>Species: {resident.details_species}</p>
-      <p>Location: {resident.details_location}</p>
-      <p>Origin: {resident.details_origin}</p>
-      
-
-      <button onClick={navigateToNoteForm}>Add Note</button>
+    <div className="container mt-5">
+      <div className="row mb-4">
+        <div className="col">
+          <Link to="/" className="btn btn-primary">
+            Home
+          </Link>
+        </div>
+      </div>
+      <div className="row justify-content-center align-items-center">
+        <div className="col-md-7">
+          <img
+            src={resident.details_image}
+            alt={resident.details_name}
+            className="img-fluid rounded"
+          />
+        </div>
+        <div className="col-md-7 mt-4">
+          <h3>{resident.details_name}</h3>
+          <p className="mb-1">
+            <strong>Status:</strong>
+            {' '}
+            {resident.details_status}
+          </p>
+          <p className="mb-1">
+            <strong>Gender:</strong>
+            {' '}
+            {resident.details_gender}
+          </p>
+          <p className="mb-1">
+            <strong>Species:</strong>
+            {' '}
+            {resident.details_species}
+          </p>
+          <p className="mb-1">
+            <strong>Location:</strong>
+            {' '}
+            {resident.details_location}
+          </p>
+          <p className="mb-1">
+            <strong>Origin:</strong>
+            {' '}
+            {resident.details_origin}
+          </p>
+        </div>
+        <div className="col-md-7 mt-4">
+          <button type="button" onClick={navigateToNoteForm} className="btn btn-primary">
+            Add Note
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

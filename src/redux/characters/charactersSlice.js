@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const baseUrl = "https://rickandmortyapi.com/api/characters";
+const baseUrl = 'https://rickandmortyapi.com/api/characters';
 export const fetchCharacters = createAsyncThunk(
   'characters/fetchCharacters',
   async (thunkApi) => {
@@ -11,13 +11,13 @@ export const fetchCharacters = createAsyncThunk(
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 const initialState = {
   characters: [],
   status: null,
-  error: null
+  error: null,
 };
 
 const charactersSlice = createSlice({
@@ -40,8 +40,8 @@ const charactersSlice = createSlice({
             details_gender: action.payload.gender,
             details_species: action.payload.species,
             details_location: action.payload.location.name,
-            details_origin: action.payload.origin.name
-          }
+            details_origin: action.payload.origin.name,
+          },
         ];
       })
       .addCase(fetchCharacters.rejected, (state, action) => {
@@ -50,7 +50,7 @@ const charactersSlice = createSlice({
           state.error = action.payload;
         }
       });
-  }
+  },
 });
 
 export default charactersSlice.reducer;

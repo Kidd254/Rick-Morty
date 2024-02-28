@@ -11,13 +11,13 @@ export const fetchDetails = createAsyncThunk(
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 const initialState = {
   details: [],
   status: null,
-  error: null
+  error: null,
 };
 
 const detailsSlice = createSlice({
@@ -40,8 +40,8 @@ const detailsSlice = createSlice({
             details_gender: action.payload.gender,
             details_species: action.payload.species,
             details_location: action.payload.location.name,
-            details_origin: action.payload.origin.name
-          }
+            details_origin: action.payload.origin.name,
+          },
         ];
       })
       .addCase(fetchDetails.rejected, (state, action) => {
@@ -50,7 +50,7 @@ const detailsSlice = createSlice({
           state.error = action.payload;
         }
       });
-  }
+  },
 });
 
 export default detailsSlice.reducer;

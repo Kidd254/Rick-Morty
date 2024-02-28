@@ -10,16 +10,15 @@ export const getLocation = createAsyncThunk(
       const response = await axios.get(baseUrl);
       return response.data.results;
     } catch (error) {
-    
       return thunkApi.rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 const initialState = {
   list: [],
   status: null,
-  error: null
+  error: null,
 };
 
 const listSlice = createSlice({
@@ -38,9 +37,8 @@ const listSlice = createSlice({
             id: listed.id,
             list_name: listed.name,
             list_type: listed.type,
-            residentURLs: listed.residents
+            residentURLs: listed.residents,
           }));
-          
         }
       })
       .addCase(getLocation.rejected, (state, action) => {
@@ -49,7 +47,7 @@ const listSlice = createSlice({
           state.error = action.payload;
         }
       });
-  }
+  },
 });
 
 export default listSlice.reducer;
