@@ -56,15 +56,6 @@ const List = () => {
     navigate(`/resident-details/${residentId}`);
   };
 
-  // Function to shuffle array randomly
-  const shuffleArray = (array) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  };
-
   const filteredLocations = list.filter((location) => {
     const locationNameMatch = location.list_name
       .toLowerCase()
@@ -84,12 +75,6 @@ const List = () => {
 
     return locationNameMatch || residentsMatch;
   });
-  // Shuffle the filteredLocations array randomly
-  const shuffledLocations = shuffleArray([...filteredLocations]);
-
-  // Variables to keep track of the number of cards rendered and the current location index
-  let cardsInRow = 0;
-  let currentLocationIndex = 0;
 
   return (
     <div className="container p-3">
@@ -105,75 +90,58 @@ const List = () => {
       <div className="row row-cols-1 row-cols-md-3 p-3">
         {status === 'loading' && <p>Loading...</p>}
         {status === 'failed' && <p>Error loading data</p>}
-        {shuffledLocations.map((location) => {
-          // Change location for every three cards
-          if (cardsInRow === 3) {
-            currentLocationIndex = (currentLocationIndex + 1) % shuffledLocations.length;
-            cardsInRow = 0;
-          }
+        {filteredLocations.map((location) => (
+          <div key={location.id} className="col mb-4">
+            {location.residentURLs.map((residentURL) => {
+              const residentId = residentURL.split('/').pop();
+              const resident = residentMap[residentId];
 
-          return (
-            <div key={location.id} className="col mb-4">
-              <div className="card p-3 border-info cursor">
-                {location.residentURLs.map((residentURL) => {
-                  const residentId = residentURL.split('/').pop();
-                  const resident = residentMap[residentId];
+              if (
+                !resident
+                || (filter
+                  && !(
+                    resident.resident_name.toLowerCase().includes(filter.toLowerCase())
+                    || location.list_name.toLowerCase().includes(filter.toLowerCase())
+                  ))
+              ) {
+                return null; // Skip if the resident or location doesn't match the filter
+              }
 
-                  if (resident) {
-                    return (
-                      <div
-                        key={resident.id}
-                        className="card-details border p-3 mb-4 bg-dark"
-                        onClick={() => handleResidentClick(resident.id)}
-                      >
-                        <h3 className="card-title text-white">
-                          {resident.resident_name}
-                        </h3>
-                        <p className="card-text text-white">
-                          Status:
-                          {' '}
-                          {resident.resident_status}
-                        </p>
-                        <img
-                          src={resident.resident_image}
-                          alt={resident.resident_name}
-                          className="card-img-top img-fluid rounded"
-                        />
-
-                        <div className="card mt-3 border-success">
-                          <div className="card-body bg-secondary">
-                            <h4 className="card-subtitle mb-2 text-light">
-                              Location:
-                              {' '}
-                              {
-                                shuffledLocations[currentLocationIndex]
-                                  .list_name
-                              }
-                            </h4>
-                            <p className="card-text text-white">
-                              Type:
-                              {' '}
-                              {
-                                shuffledLocations[currentLocationIndex]
-                                  .list_type
-                              }
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  }
-                })}
-              </div>
-              {/* Add an empty column for spacing after every two cards on small screens */}
-              {cardsInRow === 2 && (
-                <div className="w-100 d-none d-md-block" />
-              )}
-              {/* Increment the number of cards in the row */}
-              {cardsInRow++}
-            </div>
-          );
-        })}
+              return (
+                <div
+                  key={resident.id}
+                  className="card p-3 border-info cursor"
+                  onClick={() => handleResidentClick(resident.id)}
+                >
+                  {/* Display resident details here */}
+                  <div className="card-details border p-3 mb-4 bg-dark">
+                    <h3 className="card-title text-white">{resident.resident_name}</h3>
+                    <p className="card-text text-white">
+                      Status:
+                      {resident.resident_status}
+                    </p>
+                    <img
+                      src={resident.resident_image}
+                      alt={resident.resident_name}
+                      className="card-img-top img-fluid rounded"
+                    />
+                  </div>
+                  {/* Display location details here */}
+                  <div className="card-body bg-secondary">
+                    <h4 className="card-subtitle mb-2 text-light">
+                      Location:
+                      {location.list_name}
+                    </h4>
+                    <p className="card-text text-white">
+                      Type:
+                      {location.list_type}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ))}
       </div>
     </div>
   );
