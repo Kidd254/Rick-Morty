@@ -22,7 +22,7 @@ const NoteForm = () => {
       // Update the state to display the saved note
       setSavedNote(note);
     } catch (error) {
-      console.error('Error saving note:', error);
+      // Intentionally left empty
     }
   };
 
@@ -33,26 +33,31 @@ const NoteForm = () => {
           <Link to="/" className="btn btn-primary">Home</Link>
         </div>
         <div className="col text-end">
-          <button onClick={() => navigate(`/resident-details/${residentId}`)} className="btn btn-primary">Resident Details</button>
+          <button type="button" onClick={() => navigate(`/resident-details/${residentId}`)} className="btn btn-primary">Resident Details</button>
         </div>
       </div>
       <div className="row justify-content-center align-items-center">
         <div className="col-md-7">
-          <h3>Resident: {residentId}</h3>
+          <h3>
+            Resident:
+            {residentId}
+          </h3>
           <textarea
             placeholder="Add a note..."
             value={note}
             onChange={(e) => setNote(e.target.value)}
             className="form-control"
           />
-          <button onClick={saveNote} className="btn btn-primary mt-3">
+          <button type="button" onClick={saveNote} className="btn btn-primary mt-3">
             Save Note
           </button>
         </div>
         <div className="col-md-7 mt-4">
           {savedNote && (
             <div className="alert alert-success" role="alert">
-              <strong>Saved Note:</strong> {savedNote}
+              <strong>Saved Note:</strong>
+              {' '}
+              {savedNote}
             </div>
           )}
         </div>

@@ -6,7 +6,7 @@ import axios from 'axios';
 const initialState = {
   residents: [],
   status: 'idle',
-  error: null
+  error: null,
 };
 
 // Create an async thunk for fetching residents
@@ -14,12 +14,10 @@ export const fetchResidents = createAsyncThunk(
   'residents/fetchResidents',
   async (residentURLs) => {
     const residentsData = await Promise.all(
-      residentURLs.map((url) =>
-        axios.get(url).then((response) => response.data)
-      )
+      residentURLs.map((url) => axios.get(url).then((response) => response.data)),
     );
     return residentsData;
-  }
+  },
 );
 
 // Create the residents slice
@@ -42,16 +40,15 @@ const residentsSlice = createSlice({
             resident_name: resident.name,
             resident_status: resident.status,
             resident_image: resident.image,
-            resident_episode: resident.episode
+            resident_episode: resident.episode,
           }));
-          
         }
       })
       .addCase(fetchResidents.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
-  }
+  },
 });
 
 export default residentsSlice.reducer;

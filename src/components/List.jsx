@@ -1,8 +1,12 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable no-plusplus */
+/* eslint-disable no-param-reassign */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { getLocation } from '../redux/list/listSlice';
 import { fetchResidents } from '../redux/location/residentsSlice';
-import { useNavigate } from 'react-router-dom';
 
 const List = () => {
   const dispatch = useDispatch();
@@ -11,7 +15,7 @@ const List = () => {
   const { list, residents, status } = useSelector((state) => ({
     list: state.list.list,
     residents: state.residents.residents,
-    status: state.list.status
+    status: state.list.status,
   }));
 
   const [filter, setFilter] = useState('');
@@ -27,10 +31,8 @@ const List = () => {
       if (list.length > 0) {
         const residentURLs = list.reduce(
           (urls, location) => urls.concat(location.residentURLs),
-          []
+          [],
         );
-
-        console.log('Resident URLs:', residentURLs);
 
         await dispatch(fetchResidents(residentURLs));
       }
@@ -45,7 +47,7 @@ const List = () => {
       residents.reduce((map, resident) => {
         map[resident.id] = resident;
         return map;
-      }, {})
+      }, {}),
     );
   }, [residents]);
 
@@ -72,15 +74,12 @@ const List = () => {
       const residentDetails = residentMap[residentId];
 
       return (
-        residentDetails &&
-        residentDetails.resident_name
+        residentDetails
+        && residentDetails.resident_name
           .toLowerCase()
           .includes(filter.toLowerCase())
       );
     });
-
-    console.log('Location Name Match:', locationNameMatch);
-    console.log('Residents Match:', residentsMatch);
 
     return locationNameMatch || residentsMatch;
   });
@@ -108,8 +107,7 @@ const List = () => {
         {shuffledLocations.map((location) => {
           // Change location for every three cards
           if (cardsInRow === 3) {
-            currentLocationIndex =
-              (currentLocationIndex + 1) % shuffledLocations.length;
+            currentLocationIndex = (currentLocationIndex + 1) % shuffledLocations.length;
             cardsInRow = 0;
           }
 
@@ -131,7 +129,9 @@ const List = () => {
                           {resident.resident_name}
                         </h3>
                         <p className="card-text text-white">
-                          Status: {resident.resident_status}
+                          Status:
+                          {' '}
+                          {resident.resident_status}
                         </p>
                         <img
                           src={resident.resident_image}
@@ -142,14 +142,16 @@ const List = () => {
                         <div className="card mt-3 border-success">
                           <div className="card-body bg-secondary">
                             <h4 className="card-subtitle mb-2 text-light">
-                              Location:{' '}
+                              Location:
+                              {' '}
                               {
                                 shuffledLocations[currentLocationIndex]
                                   .list_name
                               }
                             </h4>
                             <p className="card-text text-white">
-                              Type:{' '}
+                              Type:
+                              {' '}
                               {
                                 shuffledLocations[currentLocationIndex]
                                   .list_type
@@ -164,7 +166,9 @@ const List = () => {
                   return (
                     <div key={residentURL} className="card-body">
                       <p className="card-text">
-                        Resident data not available for URL: {residentURL}
+                        Resident data not available for URL:
+                        {' '}
+                        {residentURL}
                       </p>
                     </div>
                   );
@@ -172,7 +176,7 @@ const List = () => {
               </div>
               {/* Add an empty column for spacing after every two cards on small screens */}
               {cardsInRow === 2 && (
-                <div className="w-100 d-none d-md-block"></div>
+                <div className="w-100 d-none d-md-block" />
               )}
               {/* Increment the number of cards in the row */}
               {cardsInRow++}

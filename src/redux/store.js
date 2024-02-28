@@ -10,8 +10,8 @@ const store = configureStore({
     list: listReducer,
     residents: residentsReducer,
     details: detailsReducer,
-    characters: charactersReducer
-  }
+    characters: charactersReducer,
+  },
 });
 
 export default store;
