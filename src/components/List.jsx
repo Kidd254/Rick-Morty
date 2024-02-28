@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getLocation } from '../redux/list/listSlice';
 import { fetchResidents } from '../redux/location/residentsSlice';
+import '../assets/styles/custom.css';
 
 const List = () => {
   const dispatch = useDispatch();
@@ -113,7 +114,7 @@ const List = () => {
 
           return (
             <div key={location.id} className="col mb-4">
-              <div className="card p-3 border-info cursor-pointer">
+              <div className="card p-3 border-info cursor">
                 {location.residentURLs.map((residentURL) => {
                   const residentId = residentURL.split('/').pop();
                   const resident = residentMap[residentId];
