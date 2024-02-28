@@ -163,16 +163,6 @@ const List = () => {
                       </div>
                     );
                   }
-
-                  return (
-                    <div key={residentURL} className="card-body">
-                      <p className="card-text">
-                        Resident data not available for URL:
-                        {' '}
-                        {residentURL}
-                      </p>
-                    </div>
-                  );
                 })}
               </div>
               {/* Add an empty column for spacing after every two cards on small screens */}
