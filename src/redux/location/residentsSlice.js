@@ -41,7 +41,8 @@ const residentsSlice = createSlice({
             id: resident.id,
             resident_name: resident.name,
             resident_status: resident.status,
-            resident_image: resident.image
+            resident_image: resident.image,
+            resident_episode: resident.episode
           }));
           
         }
