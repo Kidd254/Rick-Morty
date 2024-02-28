@@ -52,11 +52,21 @@ const ResidentDetails = () => {
         </div>
         <div className="col-md-7 mt-4">
           <h3>{resident.details_name}</h3>
-          <p className="mb-1">Status: {resident.details_status}</p>
-          <p className="mb-1">Gender: {resident.details_gender}</p>
-          <p className="mb-1">Species: {resident.details_species}</p>
-          <p className="mb-1">Location: {resident.details_location}</p>
-          <p className="mb-1">Origin: {resident.details_origin}</p>
+          <p className="mb-1">
+            <strong>Status:</strong> {resident.details_status}
+          </p>
+          <p className="mb-1">
+            <strong>Gender:</strong> {resident.details_gender}
+          </p>
+          <p className="mb-1">
+            <strong>Species:</strong> {resident.details_species}
+          </p>
+          <p className="mb-1">
+            <strong>Location:</strong> {resident.details_location}
+          </p>
+          <p className="mb-1">
+            <strong>Origin:</strong> {resident.details_origin}
+          </p>
         </div>
         <div className="col-md-7 mt-4">
           <button onClick={navigateToNoteForm} className="btn btn-primary">

@@ -93,7 +93,7 @@ const List = () => {
 
   return (
     <div className="container p-3">
-      <div className="d-flex justify-content-center align-items-center">
+      <div className="d-flex justify-content-center align-items-center mb-3">
         <input
           type="text"
           placeholder="Search by location name or type"
@@ -115,41 +115,40 @@ const List = () => {
 
           return (
             <div key={location.id} className="col mb-4">
-              {/* Change: Added a container card without border */}
-              <div className="card p-3">
+              <div className="card p-3 border-info cursor-pointer">
                 {location.residentURLs.map((residentURL) => {
                   const residentId = residentURL.split('/').pop();
                   const resident = residentMap[residentId];
 
                   if (resident) {
-                    // Change: Separate cards for each resident and location
                     return (
                       <div
                         key={resident.id}
-                        className="card-details border p-3 mb-2"
+                        className="card-details border p-3 mb-4 bg-dark"
                         onClick={() => handleResidentClick(resident.id)}
                       >
-                        <h3 className="card-title">{resident.resident_name}</h3>
-                        <p className="card-text">
+                        <h3 className="card-title text-white">
+                          {resident.resident_name}
+                        </h3>
+                        <p className="card-text text-white">
                           Status: {resident.resident_status}
                         </p>
                         <img
                           src={resident.resident_image}
                           alt={resident.resident_name}
-                          className="card-img-top"
+                          className="card-img-top img-fluid rounded"
                         />
 
-                        {/* Move location-details inside the loop */}
-                        <div className="card mt-3">
-                          <div className="card-body">
-                            <h4 className="card-subtitle mb-2 text-muted">
+                        <div className="card mt-3 border-success">
+                          <div className="card-body bg-secondary">
+                            <h4 className="card-subtitle mb-2 text-light">
                               Location:{' '}
                               {
                                 shuffledLocations[currentLocationIndex]
                                   .list_name
                               }
                             </h4>
-                            <p className="card-text">
+                            <p className="card-text text-white">
                               Type:{' '}
                               {
                                 shuffledLocations[currentLocationIndex]
@@ -174,30 +173,6 @@ const List = () => {
               {/* Add an empty column for spacing after every two cards on small screens */}
               {cardsInRow === 2 && (
                 <div className="w-100 d-none d-md-block"></div>
-              )}
-              {cardsInRow < 3 && (
-                <div className="col mb-4">
-                  <div className="card p-3">
-                    {/* Display a random card */}
-                    <div className="card-details border p-3">
-                      <h3 className="card-title">Random Resident</h3>
-                      <p className="card-text">Status: Random Status</p>
-                      <img
-                        src="https://via.placeholder.com/150"
-                        alt="Random Resident"
-                        className="card-img-top"
-                      />
-                      <div className="card mt-3">
-                        <div className="card-body">
-                          <h4 className="card-subtitle mb-2 text-muted">
-                            Location: Random Location
-                          </h4>
-                          <p className="card-text">Type: Random Type</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               )}
               {/* Increment the number of cards in the row */}
               {cardsInRow++}
