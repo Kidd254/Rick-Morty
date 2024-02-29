@@ -33,8 +33,6 @@
 ## 🛠 Built With <a name="built-with"></a>
 
 ### Tech Stack <a name="tech-stack"></a>
-
-
 <details>
   <summary>Client</summary>
   <ul>
@@ -50,7 +48,8 @@
 
 - [x] Set up the project using (CRA) create-react-app👍.
 - [x] Remove the boilerplate from the project after setting up💯.
-- [x] Use the basic CSS style for styling the components.
+- [x] Install Redux-toolkit and configure
+- [x] Install bootstrap package and configure
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -66,22 +65,25 @@
 
 
 
-To get a local copy up and running, follow these steps.
+To create the up, follow these steps.
 
 ### Prerequisites
 
-In order to run this project you need:
+In order to run this project you need to have the following installed;
+- Node.js
+- npm
+
+You also need to have a basic understanding of React JS, Redux and bootstrap.
 
 
 ### Setup
-
-Clone this repository to your desired folder:
-
-
+ Set up the project using (CRA) create-react-app to your desired folder👍 (rick_morty folder)
 ```sh
-  cd my-folder
-  git clone https://github.com/Kidd254/Rick-Morty.git
+npx create-react-app rick_morty
+cd rick_morty
+npm start
 ```
+This will start the application in development mode. You can now open the application in your browser by navigating to `http://localhost:3000`.
 
 
 ### Install
@@ -108,6 +110,7 @@ To run tests for the linter, run the following command:
 ```sh
  npx hint .
 npx eslint . --fix
+
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
