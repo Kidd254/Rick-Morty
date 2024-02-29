@@ -55,9 +55,9 @@
 
 ## 🚀 Live Demo <a name="live-demo"></a>
 
-- [a link to the online version]()
+- [a link to the online version](https://rick-and-morty-7d94.onrender.com/)
 
-- [a link to a presentation about this project]()
+- [a link to a presentation about this project] ()
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
