@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const baseUrl = 'https://rickandmortyapi.com/api/characters';
+const baseUrl = process.env.REACT_APP_API_BASE_URL;
 export const fetchCharacters = createAsyncThunk(
   'characters/fetchCharacters',
   async (thunkApi) => {
     try {
-      const response = await axios.get(baseUrl);
+      const response = await axios.get(`${baseUrl}/character`);
       return response.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
