@@ -88,20 +88,222 @@ This will start the application in development mode. You can now open the applic
 
 ### Install
 
-Install this project with:
+Install the neccesary packages:
 ```sh
-  cd Rick-Morty
-  npm install
+npm install @redux/toolkit
+npm install bootstrap
+npm install axios
+npm install react-router-dom
+```
+### setting up Redux
+-create listSlice to retrieve relevant location data (location id, location name, location type, and resident urls) and add the reducers to store.js
+
+```sh
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+
+const baseUrl = 'https://rickandmortyapi.com/api/location/';
+
+export const getLocation = createAsyncThunk(
+  'list/getLocation',
+  async (thunkApi) => {
+    try {
+      const response = await axios.get(baseUrl);
+      return response.data.results;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  },
+);
+
+const initialState = {
+  list: [],
+  status: null,
+  error: null,
+};
+
+const listSlice = createSlice({
+  name: 'list',
+  initialState,
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(getLocation.pending, (state) => {
+        if (state.list.length === 0) state.status = 'loading';
+      })
+      .addCase(getLocation.fulfilled, (state, action) => {
+        if (state.list.length === 0) {
+          state.status = 'succeeded';
+          state.list = action.payload.map((listed) => ({
+            id: listed.id,
+            list_name: listed.name,
+            list_type: listed.type,
+            residentURLs: listed.residents,
+          }));
+        }
+      })
+      .addCase(getLocation.rejected, (state, action) => {
+        if (state.list.length === 0) {
+          state.status = 'failed';
+          state.error = action.payload;
+        }
+      });
+  },
+});
+
+export default listSlice.reducer;
+
 ```
 
-### Usage
+- Create residentsSlice to retrieve resident name, resident status, resident image, and episodeUrls and add the reducers to store.js
+  
 
-To run the project, execute the following command:
+```sh
+  import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+
+const initialState = {
+  residents: [],
+  status: 'idle',
+  error: null,
+};
+
+// async thunk for fetching residents
+export const fetchResidents = createAsyncThunk(
+  'residents/fetchResidents',
+  async (residentURLs) => {
+    const residentsData = await Promise.all(
+      residentURLs.map((url) => axios.get(url).then((response) => response.data)),
+    );
+    return residentsData;
+  },
+);
+
+// Create the residents slice
+const residentsSlice = createSlice({
+  name: 'residents',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    // Add the fetchResidents thunk to extraReducers
+    builder
+      .addCase(fetchResidents.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchResidents.fulfilled, (state, action) => {
+        if (state.residents.length === 0) {
+          state.status = 'succeeded';
+          // Correct the property name to match your payload
+          state.residents = action.payload.map((resident) => ({
+            id: resident.id,
+            resident_name: resident.name,
+            resident_status: resident.status,
+            resident_image: resident.image,
+            episodeURLs: resident.episode,
+          }));
+        }
+      })
+      .addCase(fetchResidents.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      });
+  },
+});
+
+export default residentsSlice.reducer;
+```
+
+-Create detailsSlice to retrieve resident details and add to store.js
+```sh
+  import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+
+export const fetchDetails = createAsyncThunk(
+  'details/fetchDetails',
+  async (id, thunkApi) => {
+    try {
+      const baseUrl = `https://rickandmortyapi.com/api/character/${id}`;
+      const response = await axios.get(baseUrl);
+      return response.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  },
+);
+
+const initialState = {
+  details: [],
+  status: null,
+  error: null,
+};
+
+const detailsSlice = createSlice({
+  name: 'details',
+  initialState,
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchDetails.pending, (state) => {
+        if (state.details.length === 0) state.status = 'loading';
+      })
+      .addCase(fetchDetails.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.details = [
+          {
+            id: action.payload.id,
+            details_name: action.payload.name,
+            details_image: action.payload.image,
+            details_status: action.payload.status,
+            details_gender: action.payload.gender,
+            details_species: action.payload.species,
+            details_location: action.payload.location.name,
+            details_origin: action.payload.origin.name,
+          },
+        ];
+      })
+      .addCase(fetchDetails.rejected, (state, action) => {
+        if (state.details.length === 0) {
+          state.status = 'failed';
+          state.error = action.payload;
+        }
+      });
+  },
+});
+
+export default detailsSlice.reducer;
+
+```
+
+### setting up components
+- create the main component to display resident details and location (List.jsx)
+- create a details component to display details for specific resident (ResidentDetails.jsx)
+- create a note component to enable a user add a note (NoteForm.jsx).
 
 ```sh
   npm start
 ```
+### setting up assets
+-add relevant assets (fonts, custom styles, and images)
 
+### setting up Layout
+-Create a layout file to define the structure of the main wireframe.
+```sh
+import PropTypes from 'prop-types';
+
+const Layout = ({ children }) => (
+  <>
+    <main>{children}</main>
+  </>
+);
+
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export default Layout;
+
+
+```
 
 ### Run tests
 
@@ -129,7 +331,7 @@ npx eslint . --fix
 <!-- FUTURE FEATURES -->
 
 ## 🔭 Future Features <a name="future-features"></a>
-
+-create 
 
 
 - [x] I will test this app using the library from React or maybe use Jest to test it👌💯.
