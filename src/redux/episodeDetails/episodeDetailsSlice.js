@@ -14,6 +14,7 @@ export const fetchEpisodeDetails = createAsyncThunk(
     const episodesData = await Promise.all(
       episodeURLs.map((url) => axios.get(url).then((response) => response.data)),
     );
+
     return episodesData;
   },
 );
@@ -33,7 +34,7 @@ const episodeDetailsSlice = createSlice({
         if (state.episodeDetails.length === 0) {
           state.status = 'succeeded';
           // Correct the property name to match your payload
-          state.episodeDetails = action.payload.map((episode) => ({
+          state.episodeDetails = action.payload.flat().map((episode) => ({
             id: episode.id,
             episode_name: episode.name,
             episode_air_date: episode.air_date,

@@ -79,7 +79,11 @@ const ResidentDetails = () => {
           </p>
         </div>
         <div className="col-md-7 mt-4">
-          <button type="button" onClick={navigateToNoteForm} className="btn btn-primary">
+          <button
+            type="button"
+            onClick={navigateToNoteForm}
+            className="btn btn-primary"
+          >
             Add Note
           </button>
         </div>
