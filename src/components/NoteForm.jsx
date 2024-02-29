@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import '../assets/styles/custom.css';
 
 const NoteForm = () => {
   const { residentId } = useParams();
@@ -30,10 +31,18 @@ const NoteForm = () => {
     <div className="container mt-5">
       <div className="row mb-4">
         <div className="col">
-          <Link to="/" className="btn btn-primary">Home</Link>
+          <Link to="/" className="btn btn-primary cursor">
+            Home
+          </Link>
         </div>
         <div className="col text-end">
-          <button type="button" onClick={() => navigate(`/resident-details/${residentId}`)} className="btn btn-primary">Resident Details</button>
+          <button
+            type="button"
+            onClick={() => navigate(`/resident-details/${residentId}`)}
+            className="btn btn-primary"
+          >
+            Resident Details
+          </button>
         </div>
       </div>
       <div className="row justify-content-center align-items-center">
@@ -48,7 +57,11 @@ const NoteForm = () => {
             onChange={(e) => setNote(e.target.value)}
             className="form-control"
           />
-          <button type="button" onClick={saveNote} className="btn btn-primary mt-3">
+          <button
+            type="button"
+            onClick={saveNote}
+            className="btn btn-primary mt-3 cursor"
+          >
             Save Note
           </button>
         </div>

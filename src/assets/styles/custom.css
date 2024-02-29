@@ -1,5 +1,27 @@
+@font-face {
+  font-family: 'Poppins'; /* Use the actual font name */
+  src: url('../fonts/Poppins/Poppins-LightItalic.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Roboto'; /* Use the actual font name */
+  src: url('../fonts/Roboto/Roboto-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  background-color: black;
+}
+
+.cursor :hover {
+  cursor: pointer;
 }
