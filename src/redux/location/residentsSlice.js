@@ -1,15 +1,13 @@
-// residentsSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// Define an initial state
 const initialState = {
   residents: [],
   status: 'idle',
   error: null,
 };
 
-// Create an async thunk for fetching residents
+// async thunk for fetching residents
 export const fetchResidents = createAsyncThunk(
   'residents/fetchResidents',
   async (residentURLs) => {
@@ -40,7 +38,7 @@ const residentsSlice = createSlice({
             resident_name: resident.name,
             resident_status: resident.status,
             resident_image: resident.image,
-            resident_episode: resident.episode,
+            episodeURLs: resident.episode,
           }));
         }
       })
