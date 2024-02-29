@@ -92,7 +92,7 @@ Install the neccesary packages:
 ```sh
 npm install @reduxjs/toolkit bootstrap axios react-router-dom
 ```
-### setting up Redux
+### Setting up Redux
 - Create listSlice to retrieve location data and add the reducers to store.js.
 - Create residentsSlice to fetch resident data and add the reducers to store.js.
 = Create detailsSlice to get resident details and add to store.js
@@ -101,7 +101,7 @@ npm install @reduxjs/toolkit bootstrap axios react-router-dom
 
 ```
 
-### setting up Components
+### Setting up Components
 - Create the main component (List.jsx) to display resident details and locations.
 - Develop a details component (ResidentDetails.jsx) to display details for a specific resident.
 - Implement a note component (NoteForm.jsx) to enable users to add notes.
@@ -109,10 +109,10 @@ npm install @reduxjs/toolkit bootstrap axios react-router-dom
 ```sh
   npm start
 ```
-### setting up Assets
+### Setting up Assets
 - add relevant assets (fonts, custom styles, and images)
 
-### setting up Layout
+### Setting up Layout
 -Create a layout file to define the structure of the main wireframe.
 ```sh
 import PropTypes from 'prop-types';
@@ -138,7 +138,8 @@ To run tests for the linter, run the following command:
 
 ```sh
  npx hint .
-npx eslint . --fix
+npx eslint --fix
+npx stylelint "**/*.{css,scss}" --fix
 
 ```
 
@@ -158,12 +159,11 @@ npx eslint . --fix
 <!-- FUTURE FEATURES -->
 
 ## 🔭 Future Features <a name="future-features"></a>
--create 
 
 
 - [x] I will test this app using the library from React or maybe use Jest to test it👌💯.
-- [x] 
-- [x] 
+- [x] I will add more wireframes
+- [x] I will add other features
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
