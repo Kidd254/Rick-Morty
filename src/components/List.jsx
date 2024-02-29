@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getLocation } from '../redux/list/listSlice';
 import { fetchResidents } from '../redux/location/residentsSlice';
+import { fetchEpisodes } from '../redux/episodes/episodesSlice';
 import '../assets/styles/custom.css';
 
 const List = () => {
@@ -16,6 +17,7 @@ const List = () => {
   const { list, residents, status } = useSelector((state) => ({
     list: state.list.list,
     residents: state.residents.residents,
+    episodes: state.episodes.episodes,
     status: state.list.status,
   }));
 
@@ -43,6 +45,22 @@ const List = () => {
   }, [dispatch, list]);
 
   useEffect(() => {
+    // Fetch residents when the locations are available
+    const fetchEpisodeDetails = async () => {
+      if (residents.length > 0) {
+        const episodeURLs = residents.reduce(
+          (urls, resident) => urls.concat(resident.episodeURLs),
+          [],
+        );
+
+        await dispatch(fetchResidents(episodeURLs));
+      }
+    };
+
+    fetchEpisodeDetails();
+  }, [dispatch, residents]);
+
+  useEffect(() => {
     // Update residentMap whenever residents are updated
     setResidentMap(
       residents.reduce((map, resident) => {
@@ -51,6 +69,11 @@ const List = () => {
       }, {}),
     );
   }, [residents]);
+
+  useEffect(() => {
+    // Fetch episodes when the component mounts
+    dispatch(fetchEpisodes());
+  }, [dispatch]);
 
   const handleResidentClick = (residentId) => {
     navigate(`/resident-details/${residentId}`);
@@ -67,13 +90,31 @@ const List = () => {
 
       return (
         residentDetails
-        && residentDetails.resident_name
+        && (residentDetails.resident_name
+          .toLowerCase()
+          .includes(filter.toLowerCase())
+          || location.list_name.toLowerCase().includes(filter.toLowerCase())
+          || (residentDetails.episode_name
+            && residentDetails.episode_name
+              .toLowerCase()
+              .includes(filter.toLowerCase())))
+      );
+    });
+
+    const episodeNameMatch = location.residentURLs.some((residentURL) => {
+      const residentId = residentURL.split('/').pop();
+      const residentDetails = residentMap[residentId];
+
+      return (
+        residentDetails
+        && residentDetails.episode_name
+        && residentDetails.episode_name
           .toLowerCase()
           .includes(filter.toLowerCase())
       );
     });
 
-    return locationNameMatch || residentsMatch;
+    return locationNameMatch || residentsMatch || episodeNameMatch;
   });
 
   return (
@@ -81,7 +122,7 @@ const List = () => {
       <div className="d-flex justify-content-center align-items-center mb-3">
         <input
           type="text"
-          placeholder="Search by location name or type"
+          placeholder="Search by location name or resident name"
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
           className="form-control"
@@ -100,8 +141,12 @@ const List = () => {
                 !resident
                 || (filter
                   && !(
-                    resident.resident_name.toLowerCase().includes(filter.toLowerCase())
-                    || location.list_name.toLowerCase().includes(filter.toLowerCase())
+                    resident.resident_name
+                      .toLowerCase()
+                      .includes(filter.toLowerCase())
+                    || location.list_name
+                      .toLowerCase()
+                      .includes(filter.toLowerCase())
                   ))
               ) {
                 return null; // Skip if the resident or location doesn't match the filter
@@ -115,7 +160,9 @@ const List = () => {
                 >
                   {/* Display resident details here */}
                   <div className="card-details border p-3 mb-4 bg-dark">
-                    <h3 className="card-title text-white">{resident.resident_name}</h3>
+                    <h3 className="card-title text-white">
+                      {resident.resident_name}
+                    </h3>
                     <p className="card-text text-white">
                       Status:
                       {resident.resident_status}
