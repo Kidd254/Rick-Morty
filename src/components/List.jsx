@@ -119,7 +119,17 @@ const List = () => {
 
   return (
     <div className="container p-3">
-      <div className="d-flex justify-content-center align-items-center mb-3">
+      <div className="justify-content-center align-items-center mb-3">
+        <div className="flex-column justify-content-center align-items-center p-3">
+          {' '}
+          <h1
+            className="mx-auto d-block text-center"
+            style={{ fontFamily: 'Poppins, sans-serif' }}
+          >
+            Rick & Morty
+          </h1>
+        </div>
+
         <input
           type="text"
           placeholder="Search by location name or resident name"
@@ -156,7 +166,7 @@ const List = () => {
               return (
                 <div
                   key={resident.id}
-                  className="card p-3 border-info cursor"
+                  className="card p-3 mb-4 border-info cursor"
                   onClick={() => handleResidentClick(resident.id)}
                 >
                   {/* Display resident details here */}
