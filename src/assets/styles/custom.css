@@ -1,5 +1,20 @@
+@font-face {
+  font-family: 'Poppins'; /* Use the actual font name */
+  src: url('../fonts/Poppins/Poppins-LightItalic.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
+ body {
+  background-color: black;
+ }
+
+ .cursor :hover {
+  cursor: pointer;
+ }

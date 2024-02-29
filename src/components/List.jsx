@@ -126,6 +126,7 @@ const List = () => {
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
           className="form-control"
+          style={{ fontFamily: 'Poppins, sans-serif' }}
         />
       </div>
       <div className="row row-cols-1 row-cols-md-3 p-3">

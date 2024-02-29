@@ -37,7 +37,7 @@ const ResidentDetails = () => {
     <div className="container mt-5 border-primary p-1 rounded">
       <div className="row mb-4">
         <div className="col">
-          <Link to="/" className="btn btn-primary">
+          <Link to="/" className="btn btn-primary cursor">
             Home
           </Link>
         </div>
@@ -82,7 +82,7 @@ const ResidentDetails = () => {
           <button
             type="button"
             onClick={navigateToNoteForm}
-            className="btn btn-primary mx-auto d-block"
+            className="btn btn-primary mx-auto d-block cursor"
           >
             Add Note
           </button>
