@@ -26,7 +26,7 @@
 
 # 📖 RICK & MORTY <a name="about-project"></a>
 
-> Rick & Morty app is an app that is meant to display a list of characters, their residents and other details relevant to them. The app makes use of Rick & Morty API to retrieve relevant data for the app 
+> Rick & Morty app is an app that is meant to display a list of characters, their residents and other details relevant to them. The app makes use of Rick & Morty API to retrieve relevant data for the app. The app has three interfaces. The first interface is displayed once the app renders, the second is displayed when a card with residential and location is clicked, and the third one is accessed when a user clicks add note.
 
 
 
@@ -40,7 +40,9 @@
   <ul>
     <li><a href="#">HTML</a></li>
     <li><a href="#">CSS</a></li>
+    <li><a href="https://getbootstrap.com/">Bootstrap</a></li>
     <li><a href="https://reactjs.org/">React.js</a></li>
+     <li><a href="https://react-redux.js.org/">React/Redux</a></li>
   </ul>
 </details>
 
