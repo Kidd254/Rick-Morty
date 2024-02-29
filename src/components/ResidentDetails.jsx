@@ -34,7 +34,7 @@ const ResidentDetails = () => {
   const resident = details[0]; // Assuming you are fetching a single resident
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5 border-primary p-1 rounded">
       <div className="row mb-4">
         <div className="col">
           <Link to="/" className="btn btn-primary">
@@ -42,15 +42,15 @@ const ResidentDetails = () => {
           </Link>
         </div>
       </div>
-      <div className="row justify-content-center align-items-center">
-        <div className="col-md-7">
+      <div className="d-flex flex-column justify-content-center align-items-center border p-2 card bg-light">
+        <div className="col-md-5 justify-content-center border border-secondary border p-2 bg-dark p-2 rounded">
           <img
             src={resident.details_image}
             alt={resident.details_name}
-            className="img-fluid rounded"
+            className="img-fluid rounded mx-auto d-block"
           />
         </div>
-        <div className="col-md-7 mt-4">
+        <div className="col-md-5 mt-3 text-white bg-dark border border-secondary p-3 rounded">
           <h3>{resident.details_name}</h3>
           <p className="mb-1">
             <strong>Status:</strong>
@@ -78,11 +78,11 @@ const ResidentDetails = () => {
             {resident.details_origin}
           </p>
         </div>
-        <div className="col-md-7 mt-4">
+        <div className="col-md-4 mt-4 border-secondary p-3 rounded">
           <button
             type="button"
             onClick={navigateToNoteForm}
-            className="btn btn-primary"
+            className="btn btn-primary mx-auto d-block"
           >
             Add Note
           </button>
