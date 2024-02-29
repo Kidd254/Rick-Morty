@@ -182,7 +182,7 @@ Feel free to check the [issues page](https://github.com/Kidd254/Rick-Morty/issue
 
 ## ⭐️ Show your support <a name="support"></a>
 
-- If you like this project you can give me a star 😊 just to prove my app that it is useful for everyone and the users can use it to calculate anything 💯.
+- If you like this project you can give me a star 😊 just to prove my app that it is useful for everyone 💯.
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -196,13 +196,12 @@ Feel free to check the [issues page](https://github.com/Kidd254/Rick-Morty/issue
 <!-- LICENSE -->
 ## ❓ FAQ
 
-
 - Can I copy this project?
 
     Your are welcome, copy this project and let me know if you need something.
 
 ## 📝 License <a name="license"></a>
 
-This project is [MIT](https://github.com/Kidd254/Math-Magicians-React-App/blob/set-up/LICENSE) licensed.
+This project is [MIT](https://github.com/Kidd254/Rick-Morty/blob/set-up/LICENSE) licensed.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
