@@ -5,6 +5,7 @@ import residentsReducer from './location/residentsSlice';
 import detailsReducer from './Details/detailsSlice';
 import charactersReducer from './characters/charactersSlice';
 import episodesSlice from './episodes/episodesSlice';
+import episodeDetailsSlice from './episodeDetails/episodeDetailsSlice';
 
 const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
     details: detailsReducer,
     characters: charactersReducer,
     episodes: episodesSlice,
+    episodeDetails: episodeDetailsSlice,
   },
 });
 
