@@ -189,20 +189,17 @@ Feel free to check the [issues page](https://github.com/Kidd254/Rick-Morty/issue
 
 ## 🙏 Acknowledgments
 
--  Thanks to the Rick and Morty API for providing the data used in this project.
-    Inspiration for this project came from the amazing world of Rick and Morty.
+-  Thanks to [Shamiri Institute](https://www.shamiri.institute/) for providing the API used in this project.
+-  Inspiration for this project came from the amazing world of Rick and Morty.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 <!-- LICENSE -->
 ## ❓ FAQ
 
-- What is this for?
-
-    This is a React.js project created by Microverse to allow students learn and practice React.js.
 
 - Can I copy this project?
 
-    Your welcome, copy this project and let us know if you need something.
+    Your are welcome, copy this project and let me know if you need something.
 
 ## 📝 License <a name="license"></a>
 
