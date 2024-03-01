@@ -36,7 +36,7 @@ const episodesSlice = createSlice({
             id: episode.id,
             episode_name: episode.name,
             episode: episode.episode,
-            episode_characters: episode.characters,
+            characterURLs: episode.characters,
           }));
         }
       })
