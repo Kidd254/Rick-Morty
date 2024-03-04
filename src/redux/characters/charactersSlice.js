@@ -1,54 +1,50 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const baseUrl = process.env.REACT_APP_API_BASE_URL;
-export const fetchCharacters = createAsyncThunk(
-  'characters/fetchCharacters',
-  async (thunkApi) => {
-    try {
-      const response = await axios.get(`${baseUrl}/character`);
-      return response.data;
-    } catch (error) {
-      return thunkApi.rejectWithValue(error.message);
-    }
-  },
-);
-
 const initialState = {
   characters: [],
-  status: null,
+  status: 'idle',
   error: null,
 };
 
+// async thunk for fetching residents
+export const fetchCharacters = createAsyncThunk(
+  'characters/fetchCharacters',
+  async (characterURLs) => {
+    const residentsData = await Promise.all(
+      characterURLs.map((url) => axios.get(url).then((response) => response.data)),
+    );
+    return residentsData;
+  },
+);
+
+// Create the residents slice
 const charactersSlice = createSlice({
   name: 'characters',
   initialState,
-
+  reducers: {},
   extraReducers: (builder) => {
+    // Add the fetchResidents thunk to extraReducers
     builder
       .addCase(fetchCharacters.pending, (state) => {
-        if (state.characters.length === 0) state.status = 'loading';
+        state.status = 'loading';
       })
       .addCase(fetchCharacters.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.characters = [
-          {
-            id: action.payload.id,
-            details_name: action.payload.name,
-            details_image: action.payload.image,
-            details_status: action.payload.status,
-            details_gender: action.payload.gender,
-            details_species: action.payload.species,
-            details_location: action.payload.location.name,
-            details_origin: action.payload.origin.name,
-          },
-        ];
+        if (state.characters.length === 0) {
+          state.status = 'succeeded';
+          // Correct the property name to match your payload
+          state.characters = action.payload.map((character) => ({
+            id: character.id,
+            character_name: character.name,
+            character_status: character.status,
+            character_image: character.image,
+            episodeURLs: character.episode,
+          }));
+        }
       })
       .addCase(fetchCharacters.rejected, (state, action) => {
-        if (state.characters.length === 0) {
-          state.status = 'failed';
-          state.error = action.payload;
-        }
+        state.status = 'failed';
+        state.error = action.error.message;
       });
   },
 });
